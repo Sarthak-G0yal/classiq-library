@@ -19,9 +19,9 @@ This repository holds a wide collection of quantum functions, algorithms, applic
    &emsp;|&emsp;
    <a href="https://short.classiq.io/join-slack">👋 Join Slack</a>
    &emsp;|&emsp;
-   <a href="https://docs.classiq.io/latest/user-guide/">📖 Documentation</a>
+   <a href="https://docs.classiq.io/latest/">📖 Documentation</a>
    &emsp; | &emsp;
-   <a href="https://docs.classiq.io/latest/getting-started/">Getting Started</a>
+   <a href="https://docs.classiq.io/latest/">Getting Started</a>
    &emsp;
 </p>
 
@@ -37,6 +37,8 @@ If you'd rather work programmatically, using Python, Classiq also provides an SD
 ```bash
 pip install classiq
 ```
+
+Please note that the latest Classiq SDK for Python doesn't work in Python 3.12 yet. Please refer to [Issue #17](https://github.com/Classiq/classiq-library/issues/17).
 
 ## Running This Repository's Demos
 
@@ -93,13 +95,13 @@ def main(res: Output[QBit]):
     X(res)
 ```
 
-The 1st line states that the function will be a quantum one. [Further documentation](https://docs.classiq.io/latest/user-guide/platform/qmod/python/functions/).
+The 1st line states that the function will be a quantum one. [Further documentation](https://docs.classiq.io/latest/qmod-reference/language-reference/functions/).
 
-The 2nd line defines the type of the output. [Further examples on types](https://docs.classiq.io/latest/user-guide/platform/qmod/python/types/)
+The 2nd line defines the type of the output. [Further examples on types](https://docs.classiq.io/latest/qmod-reference/language-reference/classical-types/)
 
-The 3rd line allocates several qubits (in this example, only 1) in this quantum variable. [Further details on allocate](https://docs.classiq.io/latest/user-guide/platform/qmod/python/quantum-expressions/)
+The 3rd line allocates several qubits (in this example, only 1) in this quantum variable. [Further details on allocate](https://docs.classiq.io/latest/qmod-reference/language-reference/quantum-variables/)
 
-The 4th line applies an `X` operator on the quantum variable. [Further details on quantum operators](https://docs.classiq.io/latest/user-guide/platform/qmod/python/operators/)
+The 4th line applies an `X` operator on the quantum variable. [Further details on quantum operators](https://docs.classiq.io/latest/qmod-reference/language-reference/operators/)
 
 ### More Examples
 
@@ -113,7 +115,7 @@ def prep_minus(out: Output[QBit]) -> None:
     H(out)
 ```
 
-A part of the Deutsch Jozsa algorithm (see the full algirthm [here](/algorithms/deutsch_josza/deutsch_jozsa.ipynb))
+A part of the Deutsch Jozsa algorithm (see the full algorithm [here](/algorithms/deutsch_josza/deutsch_jozsa.ipynb))
 
 ```python
 @qfunc
@@ -123,16 +125,14 @@ def deutsch_jozsa(predicate: QCallable[QNum, QBit], x: QNum) -> None:
     hadamard_transform(x)
 ```
 
-A part of a QML encoder (see the full algirthm [here](/algorithms/qml/quantum_autoencoder/quantum_autoencoder.ipynb))
+A part of a QML encoder (see the full algorithm [here](/algorithms/qml/quantum_autoencoder/quantum_autoencoder.ipynb))
 
 ```python
 @qfunc
-def angle_encoding(
-    exe_params: QParam[List[float]], qbv: Output[QArray[QBit, "len(exe_params)"]]
-) -> None:
-    allocate(exe_params.len(), qbv)
+def angle_encoding(exe_params: CArray[CReal], qbv: Output[QArray[QBit]]) -> None:
+    allocate(exe_params.len, qbv)
     repeat(
-        count=exe_params.len(),
+        count=exe_params.len,
         iteration=lambda index: RY(pi * exe_params[index], qbv[index]),
     )
 ```
@@ -168,17 +168,17 @@ Classiq provides an easy-to-use way to execute quantum programs, and provides va
 flowchart
     IDEInput[<a href='https://platform.classiq.io/'>Classiq IDE</a>]
 
-    SDKInput[<a href='https://docs.classiq.io/latest/getting-started/python-sdk/'>Classiq python SDK</a>]
+    SDKInput[<a href='https://docs.classiq.io/latest/sdk-reference/'>Classiq python SDK</a>]
 
-    Model[<a href='https://docs.classiq.io/latest/user-guide/platform/qmod/'>Quantum Model</a>]
+    Model[<a href='https://docs.classiq.io/latest/qmod-reference/'>Quantum Model</a>]
 
-    Synthesis[<a href='https://docs.classiq.io/latest/user-guide/platform/synthesis/'>Synthesis Engine</a>]
+    Synthesis[<a href='https://docs.classiq.io/latest/classiq_101/classiq_concepts/optimize/'>Synthesis Engine</a>]
 
     QuantumProgram[Quantum Program]
 
-    Execution[<a href='https://docs.classiq.io/latest/user-guide/platform/executor/'>Execution</a>]
+    Execution[<a href='https://docs.classiq.io/latest/classiq_101/classiq_concepts/execute/'>Execution</a>]
 
-    Analyze[<a href='https://docs.classiq.io/latest/user-guide/platform/analyzer/'>Analyze & Debug</a>]
+    Analyze[<a href='https://docs.classiq.io/latest/classiq_101/classiq_concepts/analyze/'>Analyze & Debug</a>]
 
     IBM[IBM]
     Amazon[Amazon Braket]
@@ -201,7 +201,7 @@ flowchart
 
 # Build Your Own
 
-With Classiq, you can build anything. Classiq provides a powerful modeling language to describe any quantum program, which can then be synthesized and executed on any hardware or simulator. Explore our [Documentation](https://docs.classiq.io/latest/user-guide/) to learn everything.
+With Classiq, you can build anything. Classiq provides a powerful modeling language to describe any quantum program, which can then be synthesized and executed on any hardware or simulator. Explore our [Documentation](https://docs.classiq.io/latest/) to learn everything.
 
 ## SDK : Classiq's Python Interface
 
